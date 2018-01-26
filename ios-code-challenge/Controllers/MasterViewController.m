@@ -29,10 +29,7 @@
     self.tableView.dataSource = self.dataSource;
     self.tableView.delegate = self.dataSource;
     
-    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-    
     YLPSearchQuery *query = [[YLPSearchQuery alloc] initWithLocation:@"5550 West Executive Dr. Tampa, FL 33609"];
-//    query.term = @"food";
     
     __weak typeof(self) weakSelf = self;
     [[AFYelpAPIClient sharedClient] searchWithQuery:query
