@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "DetailViewController.h"
+#import "ios_code_challenge-Swift.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
