@@ -1,6 +1,6 @@
 # iOS Code Challenge
 
-Complete the following tasks to the best of your ability. Feel free to ask questions and search the internet for help. Don't worry if you can't complete all tasks in the allowed time but think about how you would implement the task. The existing project is written in Objective-C but feel free to incorporate Swift if you'd like. 
+Complete the following tasks to the best of your ability. Feel free to ask questions and search the internet for help. Don't worry if you can't complete all tasks in the allowed time but think about how you would implement the task. The existing project is written in Objective-C/Swift. Please write new code in Swift.
 
 Complete each task in a separate commit.
 
