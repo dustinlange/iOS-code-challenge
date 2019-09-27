@@ -22,7 +22,7 @@
     // Number of reviews
     self.reviewCountLabel.text = [NSString stringWithFormat:@"Number of reviews: %lu", business.reviewCount];
     // Distance
-    self.distanceLabel.text = [NSString stringWithFormat:@"Distance: %0.2f", business.distance];
+    self.distanceLabel.text = [NSString stringWithFormat:@"Distance: %0.2f miles", business.distance];
     // Thumbnail - Image View
     self.businessImageView.clipsToBounds = YES;
     self.businessImageView.contentMode = UIViewContentModeCenter;
