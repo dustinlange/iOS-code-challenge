@@ -24,6 +24,31 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly, copy) NSString *name;
 
+/**
+ *  Categories of this business.
+ */
+@property (nonatomic, readonly, copy) NSString *categories;
+
+/**
+ *  Rating of this business.
+ */
+@property (nonatomic, readonly) double rating;
+
+/**
+ *  Number of reviews of this business.
+ */
+@property (nonatomic, readonly) NSUInteger reviewCount;
+
+/**
+ *  Distance from this business.
+ */
+@property (nonatomic, readonly) double distance;
+
+/**
+ *  Image url of this business.
+ */
+@property (nonatomic, readonly, copy) NSString *imageUrlString;
+
 @end
 
 NS_ASSUME_NONNULL_END
