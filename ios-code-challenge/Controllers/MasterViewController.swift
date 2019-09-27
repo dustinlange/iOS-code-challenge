@@ -34,7 +34,8 @@ class MasterViewController: UITableViewController {
                 let businesses = searchResult?.businesses else {
                     return
             }
-            dataSource.setObjects(businesses)
+            let businessesByDistance = businesses.sorted(by: { $0.distance < $1.distance })
+            dataSource.setObjects(businessesByDistance)
             strongSelf.tableView.reloadData()
         })
     }
