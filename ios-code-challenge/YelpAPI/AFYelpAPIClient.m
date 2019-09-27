@@ -9,7 +9,7 @@
 #import "AFYelpAPIClient.h"
 #import "AFOAuth2Manager.h"
 
-static NSString *const kYelpAPIKey = @"";
+static NSString *const kYelpAPIKey = @"-ygyO-dspWG_X9FLfdWNNSjV-KXKotNPw5INMMACOnB1UX_cPHlnEovTfYmxW1A1njfFaBPONSTHhpz6oFCHR8udLIDA0PzNkK5yoeikUzMlU7LNMmEkQt3ok1WJXXYx";
 static NSString *const kYelpAPIBaseURL = @"https://api.yelp.com/v3/";
 
 @interface AFYelpAPIClient()
