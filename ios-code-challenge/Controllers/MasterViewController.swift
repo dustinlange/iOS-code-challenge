@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import CoreLocation
 
 class MasterViewController: UITableViewController {
     
     var detailViewController: DetailViewController?
-    
+
+
     lazy private var dataSource: NXTDataSource? = {
         guard let dataSource = NXTDataSource(objects: nil) else { return nil }
         dataSource.tableViewDidReceiveData = { [weak self] in
@@ -26,18 +28,18 @@ class MasterViewController: UITableViewController {
         
         tableView.dataSource = dataSource
         tableView.delegate = dataSource
-        
-        let query = YLPSearchQuery(location: "5550 West Executive Dr. Tampa, FL 33609")
-        AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
-            guard let strongSelf = self,
-                let dataSource = strongSelf.dataSource,
-                let businesses = searchResult?.businesses else {
-                    return
+
+        let currentLocation = getCurrentLocation()
+        getBusinesses(near: currentLocation) { result in
+            switch result {
+            case .success(let query):
+                self.makeNetworkCall(with: query)
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    Alert.showSimpleAlert(with: "An error occured.", message: error.localizedDescription, viewController: self)
+                }
             }
-            let businessesByDistance = businesses.sorted(by: { $0.distance < $1.distance })
-            dataSource.setObjects(businessesByDistance)
-            strongSelf.tableView.reloadData()
-        })
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -59,4 +61,50 @@ class MasterViewController: UITableViewController {
         }
     }
 
+    func getCurrentLocation() -> CLLocation {
+        let locationManager = CLLocationManager()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+        guard let location = locationManager.location else {
+            fatalError("Could not get current location.")
+        }
+        return location
+    }
+
+    func getBusinesses(near location: CLLocation, onComplete: @escaping (Result< YLPSearchQuery, Error>) -> Void) {
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            if error == nil {
+                guard let placemark = placemarks?.first,
+                    let address = placemark.name,
+                    let city = placemark.locality,
+                    let zipCode = placemark.postalCode else { return }
+                let queryLocation = address + " " + city + " " + zipCode
+                let query = YLPSearchQuery(location: queryLocation)
+                onComplete(.success(query))
+            } else {
+                guard let error = error else {
+                    fatalError("Geocoder fatal error.")
+                }
+                onComplete(.failure(error))
+            }
+        }
+    }
+
+    // MARK: - Network call
+    func makeNetworkCall(with query: YLPSearchQuery) {
+        AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
+            guard let strongSelf = self,
+                let dataSource = strongSelf.dataSource,
+                let businesses = searchResult?.businesses else {
+                    return
+            }
+
+            // Sort the businesses by distance
+            let businessesByDistance = businesses.sorted(by: { $0.distance < $1.distance })
+            dataSource.setObjects(businessesByDistance)
+            strongSelf.tableView.reloadData()
+        })
+    }
 }
