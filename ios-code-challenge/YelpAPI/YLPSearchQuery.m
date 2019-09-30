@@ -43,6 +43,14 @@
     if(self.categoryFilter != nil && self.categoryFilter.count > 0) {
         params[@"categories"] = [self.categoryFilter componentsJoinedByString:@","];
     }
+
+    if (self.offset) {
+        params[@"offset"] = @(self.offset);
+    }
+
+    if (self.sortBy) {
+        params[@"sort_by"] = self.sortBy;
+    }
     
     return params;
 }

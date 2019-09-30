@@ -15,6 +15,7 @@
 - (void)searchWithQuery:(YLPSearchQuery *)query
       completionHandler:(YLPSearchCompletionHandler)completionHandler
 {
+    query.sortBy = @"distance";
     [self GET:@"businesses/search"
     parameters:[query parameters]
     progress:nil

@@ -35,6 +35,21 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) double radiusFilter;
 
+/**
+ * Optional. Suggestion to the search algorithm that the results be sorted by one of the these modes:
+ * best_match, rating, review_count or distance. The default is best_match. Note that specifying the
+ * sort_by is a suggestion (not strictly enforced) to Yelp's search, which considers multiple input
+ * parameters to return the most relevant results. For example, the rating sort is not strictly sorted by
+ * the rating value, but by an adjusted rating value that takes into account the number of ratings,
+ * similar to a Bayesian average. This is to prevent skewing results to businesses with a single review.
+ */
+@property (nonatomic, assign, nullable) NSString *sortBy;
+
+/**
+ * Amount to offset list of businesses being returned.
+ */
+@property (nonatomic, assign) NSUInteger offset;
+
 @end
 
 NS_ASSUME_NONNULL_END
