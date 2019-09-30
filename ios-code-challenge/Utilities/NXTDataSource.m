@@ -13,15 +13,18 @@
 @interface NXTDataSource()
 
 @property (nonatomic, strong) NSMutableArray *mutableObjects;
+@property (nonatomic, weak) UIViewController *viewController;
     
 @end
 
 @implementation NXTDataSource
-    
+
 - (instancetype)initWithObjects:(NSArray *)objects
+             fromViewController:(UITableViewController *)viewController
 {
     if(self = [super init]) {
         _mutableObjects = [NSMutableArray arrayWithArray:objects];
+        _viewController = viewController;
     }
     
     return self;
@@ -77,7 +80,8 @@
     if(self.tableViewDidSelectCell) {
         self.tableViewDidSelectCell(object);
     }
-    
+
+    [_viewController performSegueWithIdentifier:@"showDetail" sender:nil];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
     

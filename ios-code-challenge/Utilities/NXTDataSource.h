@@ -11,7 +11,8 @@
 
 @interface NXTDataSource : NSObject <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
-- (instancetype)initWithObjects:(NSArray *)objects;
+- (instancetype)initWithObjects:(NSArray *)objects
+             fromViewController:(UITableViewController *)viewController;
     
 - (void)setObjects:(NSArray *)objects;
 - (void)appendObjects:(NSArray *)objects;

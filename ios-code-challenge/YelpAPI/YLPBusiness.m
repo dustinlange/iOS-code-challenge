@@ -20,6 +20,7 @@
         _reviewCount = [attributes[@"review_count"] integerValue];
         _distance = [self.class conversionToMiles:attributes];
         _imageUrlString = attributes[@"image_url"];
+        _price = attributes[@"price"];
     }
     
     return self;

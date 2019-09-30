@@ -10,10 +10,16 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
+    @IBOutlet weak var thumbnailImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var categoriesLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var reviewCountLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    
     lazy private var favoriteBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "Star-Outline"), style: .plain, target: self, action: #selector(onFavoriteBarButtonSelected(_:)))
 
-    @objc var detailItem: NSDate?
+    @objc var detailItem: YLPBusiness?
     
     private var _favorite: Bool = false
     private var isFavorite: Bool {
@@ -30,14 +36,29 @@ class DetailViewController: UIViewController {
     }
     
     private func configureView() {
-        guard let detailItem = detailItem else { return }
-        detailDescriptionLabel.text = detailItem.description
+        guard let business = detailItem else { return }
+        nameLabel.text = business.name
+        categoriesLabel.text = "Categories: \(business.categories)"
+        ratingLabel.text = "Rating: \(String(business.rating))"
+        reviewCountLabel.text = "Number of reviews: \(String(business.reviewCount))"
+        priceLabel.text = "Price: \(business.price)"
+        setImage(with: business.imageUrlString)
     }
     
-    func setDetailItem(newDetailItem: NSDate) {
-        guard detailItem != newDetailItem else { return }
-        detailItem = newDetailItem
+    func setBusiness(with newBusiness: YLPBusiness) {
+        guard detailItem != newBusiness else { return }
+        detailItem = newBusiness
         configureView()
+    }
+
+    private func setImage(with imageUrlString: String) {
+        thumbnailImageView.contentMode = .scaleAspectFit
+        thumbnailImageView.clipsToBounds = true
+        guard let imageUrl = URL(string: imageUrlString),
+            let data = try? Data(contentsOf: imageUrl) else { return }
+        DispatchQueue.main.async {
+            self.thumbnailImageView.image = UIImage(data: data)
+        }
     }
     
     private func updateFavoriteBarButtonState() {

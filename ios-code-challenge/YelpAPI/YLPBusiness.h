@@ -49,6 +49,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly, copy) NSString *imageUrlString;
 
+/**
+ * Price level of this business.
+ */
+@property (nonatomic, readonly, copy) NSString *price;
+
 @end
 
 NS_ASSUME_NONNULL_END

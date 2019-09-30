@@ -13,9 +13,10 @@ class MasterViewController: UITableViewController {
     
     var detailViewController: DetailViewController?
 
+    var location: CLLocation?
 
     lazy private var dataSource: NXTDataSource? = {
-        guard let dataSource = NXTDataSource(objects: nil) else { return nil }
+        guard let dataSource = NXTDataSource(objects: nil, from: self) else { return nil }
         dataSource.tableViewDidReceiveData = { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.tableView.reloadData()
@@ -29,7 +30,8 @@ class MasterViewController: UITableViewController {
         tableView.dataSource = dataSource
         tableView.delegate = dataSource
 
-        let currentLocation = getCurrentLocation()
+        location = getCurrentLocation()
+        guard let currentLocation = location else { return }
         getBusinesses(near: currentLocation) { result in
             switch result {
             case .success(let query):
@@ -50,17 +52,20 @@ class MasterViewController: UITableViewController {
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-//            guard let indexPath = tableView.indexPathForSelectedRow,
-//                let controller = segue.destination as? DetailViewController else {
-//                return
-//            }
-//            let object = objects[indexPath.row]
-//            controller.setDetailItem(newDetailItem: object)
-//            controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-//            controller.navigationItem.leftItemsSupplementBackButton = true
+            guard let indexPath = tableView.indexPathForSelectedRow,
+                let navigationController = segue.destination as? UINavigationController,
+                    let controller = navigationController.topViewController as? DetailViewController else {
+                return
+            }
+            guard let business = dataSource?.objects[indexPath.row] as? YLPBusiness else { return }
+            controller.detailItem = business
+            controller.setBusiness(with: business)
+            controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+            controller.navigationItem.leftItemsSupplementBackButton = true
         }
     }
 
+    // MARK: - Helper methods
     func getCurrentLocation() -> CLLocation {
         let locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
