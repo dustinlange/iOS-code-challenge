@@ -30,4 +30,12 @@
     }];
 }
 
+- (void)searchWithLocation:(NSString *)location offset:(NSUInteger)offset completionHandler:(YLPSearchCompletionHandler)completionHandler
+{
+    YLPSearchQuery *query = [[YLPSearchQuery alloc] initWithLocation:location];
+    query.offset = offset;
+    query.sortBy = @"distance";
+    [self searchWithQuery:query completionHandler:completionHandler];
+}
+
 @end

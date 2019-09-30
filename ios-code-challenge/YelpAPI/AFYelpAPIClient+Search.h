@@ -20,6 +20,10 @@ typedef void(^YLPSearchCompletionHandler)(YLPSearch *_Nullable search, NSError *
 - (void)searchWithQuery:(YLPSearchQuery *)query
       completionHandler:(YLPSearchCompletionHandler)completionHandler;
 
+- (void)searchWithLocation:(NSString *)location
+                     offset:(NSUInteger)offset
+         completionHandler:(YLPSearchCompletionHandler)completionHandler;
+
 @end
 
 NS_ASSUME_NONNULL_END

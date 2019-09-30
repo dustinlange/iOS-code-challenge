@@ -72,7 +72,7 @@ class MasterViewController: UITableViewController {
         return location
     }
 
-    func getBusinesses(near location: CLLocation, onComplete: @escaping (Result< YLPSearchQuery, Error>) -> Void) {
+    func getBusinesses(near location: CLLocation, offset: UInt = 0, onComplete: @escaping (Result< YLPSearchQuery, Error>) -> Void) {
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
             if error == nil {
