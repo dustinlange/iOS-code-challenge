@@ -1,7 +1,15 @@
 # iOS Code Challenge
 
+## Description
 Complete the following tasks to the best of your ability. Feel free to ask questions and search the internet for help. Don't worry if you can't complete all tasks in the allowed time but think about how you would implement the task. The existing project is written in Objective-C/Swift. Please write new code in Swift.
 
+## Prerequisites
+### Create Yelp Fusion API Key
+1. Create a free Yelp account. https://www.yelp.com/developers 
+2. Create a new app. https://www.yelp.com/developers/v3/manage_app
+3. Set the `kYelpAPIKey` constant in `AFYelpAPIClient.m` to your new API key.
+
+## Tasks
 Complete each task in a separate commit.
 
 1. Add the following fields to the business cell on the Search tab:  
